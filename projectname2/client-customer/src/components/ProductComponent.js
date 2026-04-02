@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import { withRouter } from "../utils/withRouter";
 
-const API_URL = "https://your-api.replit.app";
+const API_URL = ""; // ✅ FIX
 
 class ProductComponent extends Component {
 
@@ -31,19 +31,19 @@ class ProductComponent extends Component {
     const keyword = this.props.router.params.keyword;
 
     if(cid){
-      axios.get(`${API_URL}/api/customer/products/category/` + cid)
+      axios.get(`/api/customer/products/category/` + cid)
         .then(res=>{
           this.setState({products: res.data})
         })
     }
     else if(keyword){
-      axios.get(`${API_URL}/api/customer/products/search/` + keyword)
+      axios.get(`/api/customer/products/search/` + keyword)
         .then(res=>{
           this.setState({products: res.data})
         })
     }
     else{
-      axios.get(`${API_URL}/api/customer/products`)
+      axios.get(`/api/customer/products`)
         .then(res=>{
           this.setState({products: res.data})
         })
@@ -52,11 +52,8 @@ class ProductComponent extends Component {
 
   getImage(url){
     if(!url) return "";
-
-    // loại bỏ /uploads hoặc uploads nếu đã có
     let clean = url.replace(/^\/?uploads\/?/,"");
-
-    return `${API_URL}/uploads/${clean}`;
+    return `/uploads/${clean}`; // ✅ FIX
   }
 
   renderProducts(){
@@ -104,7 +101,6 @@ class ProductComponent extends Component {
   render(){
     return(
       <div style={{width:"90%",margin:"auto"}}>
-
         <h2 style={{textAlign:"center",marginTop:"20px"}}>
           LIST PRODUCTS
         </h2>
@@ -112,7 +108,6 @@ class ProductComponent extends Component {
         <div style={{textAlign:"center"}}>
           {this.renderProducts()}
         </div>
-
       </div>
     )
   }

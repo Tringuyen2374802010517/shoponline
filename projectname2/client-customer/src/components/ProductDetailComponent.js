@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { withRouter } from "../utils/withRouter";
 import MyContext from "../contexts/MyContext";
 
-const API_URL = "https://your-api.replit.app";
+const API_URL = ""; // ✅ FIX
 
 class ProductDetailComponent extends Component {
 
@@ -25,7 +25,7 @@ class ProductDetailComponent extends Component {
     const id = this.props.router.params.id;
 
     axios
-      .get(`${API_URL}/api/customer/products/` + id)
+      .get(`/api/customer/products/` + id)
       .then(res=>{
         this.setState({product: res.data})
       });
@@ -34,7 +34,7 @@ class ProductDetailComponent extends Component {
   getImage(url){
     if(!url) return "";
     let clean = url.replace(/^\/?uploads\/?/,"");
-    return `${API_URL}/uploads/${clean}`;
+    return `/uploads/${clean}`; // ✅ FIX
   }
 
   render(){
@@ -46,7 +46,6 @@ class ProductDetailComponent extends Component {
     }
 
     return(
-
       <div style={{width:"90%",margin:"auto"}}>
 
         <button
@@ -126,7 +125,6 @@ class ProductDetailComponent extends Component {
         </div>
 
       </div>
-
     )
   }
 
