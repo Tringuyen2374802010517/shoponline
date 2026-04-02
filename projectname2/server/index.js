@@ -33,11 +33,11 @@ console.log("CUSTOMER PATH:", customerPath);
 
 // CHECK BUILD EXIST
 if (!fs.existsSync(path.join(adminPath, 'index.html'))) {
-console.error("❌ ADMIN BUILD NOT FOUND - hãy chạy: cd client-admin && npm run build");
+console.error("❌ ADMIN BUILD NOT FOUND - chạy: cd client-admin && npm run build");
 }
 
 if (!fs.existsSync(path.join(customerPath, 'index.html'))) {
-console.error("❌ CUSTOMER BUILD NOT FOUND - hãy chạy: cd client-customer && npm run build");
+console.error("❌ CUSTOMER BUILD NOT FOUND - chạy: cd client-customer && npm run build");
 }
 
 // ================= ADMIN =================
@@ -48,7 +48,11 @@ res.sendFile(path.join(adminPath, 'index.html'));
 });
 
 // ================= CUSTOMER =================
-app.use(express.static(customerPath));
+app.use('/', express.static(customerPath));
+
+app.get('/', (req, res) => {
+res.sendFile(path.join(customerPath, 'index.html'));
+});
 
 app.get('*', (req, res) => {
 res.sendFile(path.join(customerPath, 'index.html'));
