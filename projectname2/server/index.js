@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // ================= MIDDLEWARE =================
 app.use(cors({ origin: "*" }));
@@ -16,7 +16,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ================= TEST API =================
 app.get('/hello', (req, res) => {
-res.json({ message: 'Hello from server!' });
+  res.json({ message: 'Hello from server!' });
 });
 
 // ================= API =================
@@ -33,32 +33,28 @@ console.log("CUSTOMER PATH:", customerPath);
 
 // CHECK BUILD EXIST
 if (!fs.existsSync(path.join(adminPath, 'index.html'))) {
-console.error("❌ ADMIN BUILD NOT FOUND - chạy: cd client-admin && npm run build");
+  console.error("❌ ADMIN BUILD NOT FOUND - chạy: cd client-admin && npm run build");
 }
 
 if (!fs.existsSync(path.join(customerPath, 'index.html'))) {
-console.error("❌ CUSTOMER BUILD NOT FOUND - chạy: cd client-customer && npm run build");
+  console.error("❌ CUSTOMER BUILD NOT FOUND - chạy: cd client-customer && npm run build");
 }
 
 // ================= ADMIN =================
 app.use('/admin', express.static(adminPath));
 
 app.get('/admin/*', (req, res) => {
-res.sendFile(path.join(adminPath, 'index.html'));
+  res.sendFile(path.join(adminPath, 'index.html'));
 });
 
 // ================= CUSTOMER =================
 app.use('/', express.static(customerPath));
 
-app.get('/', (req, res) => {
-res.sendFile(path.join(customerPath, 'index.html'));
-});
-
 app.get('*', (req, res) => {
-res.sendFile(path.join(customerPath, 'index.html'));
+  res.sendFile(path.join(customerPath, 'index.html'));
 });
 
 // ================= START SERVER =================
 app.listen(PORT, () => {
-console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
